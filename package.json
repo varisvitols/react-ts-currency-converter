@@ -1,6 +1,7 @@
 {
   "name": "currency-converter",
   "version": "0.1.0",
+  "proxy": "https://www.ecb.europa.eu",
   "private": true,
   "dependencies": {
     "@types/node": "^16.11.62",
