@@ -27,6 +27,12 @@ code {
     monospace;
 }
 
+input,
+select,
+button {
+  outline-color: var(--blue-color);
+}
+
 .ta-center {
   text-align: center;
 }

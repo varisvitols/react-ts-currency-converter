@@ -1,9 +1,9 @@
 import { useState } from "react";
 import InputText from "../../components/form/input-text/input-text.component";
 
-import "../../components/form/form.styles.scss";
 import Button from "../../components/button/button.component";
 import FormGroup from "../../components/form/form-group/form-group.component";
+import CurrencySwitcher from "../../components/form/currency-switcher/currency-switcher.component";
 
 function Home() {
   const [amount, setAmount] = useState("");
@@ -36,29 +36,10 @@ function Home() {
               />
             }
           />
-          {/* <div className="form-group">
-            <label>Amount</label>
-            <InputText
-              type="number"
-              value={amount}
-              onChange={inputChangeHandler}
-              ref={inputRef}
-            />
-          </div> */}
 
-          {/* <div className="form-group">
-            <label>Label</label>
-            <InputText
-              type="number"
-              value={amount}
-              onChange={inputChangeHandler}
-              ref={inputRef}
-            />
-          </div> */}
+          <CurrencySwitcher />
 
-          <div className="form-group">
-            <Button type="submit" text="Convert" />
-          </div>
+          <FormGroup formElement={<Button type="submit" text="Convert" />} />
         </form>
       </div>
     </div>

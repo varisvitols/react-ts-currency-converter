@@ -1,0 +1,16 @@
+.currency-switcher {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    height: 46px;
+    width: 70px;
+    border: none;
+    align-self: flex-end;
+    cursor: pointer;
+  }
+
+  .switch-icon {
+    width: 28px;
+  }
+}
