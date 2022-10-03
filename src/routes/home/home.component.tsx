@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import InputText from "../../components/form/input-text/input-text.component";
 
 import "../../components/form/form.styles.scss";
@@ -7,7 +7,6 @@ import FormGroup from "../../components/form/form-group/form-group.component";
 
 function Home() {
   const [amount, setAmount] = useState("");
-  const inputRef = useRef(null);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     console.log(e.target.value);
@@ -34,10 +33,8 @@ function Home() {
                 type="number"
                 value={amount}
                 onChange={inputChangeHandler}
-                ref={inputRef}
               />
             }
-            inputRef={inputRef}
           />
           {/* <div className="form-group">
             <label>Amount</label>

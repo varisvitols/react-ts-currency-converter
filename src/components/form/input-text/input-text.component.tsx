@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from "react";
+import React from "react";
 import "./input-text.styles.scss";
 
 type TextInputProps = {
@@ -7,11 +7,8 @@ type TextInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function TextInput(
-  props: TextInputProps,
-  ref: MutableRefObject<HTMLInputElement>
-) {
-  return <input {...props} ref={ref} className="input-text" />;
+function TextInput(props: TextInputProps) {
+  return <input {...props} className="input-text" />;
 }
 
-export default React.forwardRef(TextInput);
+export default TextInput;
