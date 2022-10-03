@@ -1,0 +1,30 @@
+.navigation {
+  background-color: white;
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.15));
+
+  .navigation-inner {
+    // padding: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav-link {
+    padding: 10px;
+  }
+
+  .nav-icon {
+    width: 38px;
+
+    g,
+    path {
+      fill: var(--blue-color);
+      stroke: var(--blue-color);
+    }
+
+    &.icon-house {
+    }
+
+    &.icon-gear {
+    }
+  }
+}

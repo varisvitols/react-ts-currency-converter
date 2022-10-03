@@ -1,0 +1,24 @@
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <g
+        fill="#999"
+        stroke="#333"
+        strokeLinecap="square"
+        strokeLinejoin="bevel"
+        strokeWidth="1.222"
+        color="#000"
+        transform="translate(-607.635 -694.585) matrix(.8182 0 0 .81804 601.863 678.486)"
+      >
+        <path
+          d="M23.993 23.346H27.406V29.777H23.993z"
+          enableBackground="accumulate"
+        ></path>
+        <path
+          d="M11.406 30.781v12.125h4.421v-7h4.715v7h6.864V30.781z"
+          enableBackground="accumulate"
+        ></path>
+        <path
+          d="M30.277 31.265h-22l11-10.363z"
+          enableBackground="accumulate"
+        ></path>
+      </g>
+    </svg>
