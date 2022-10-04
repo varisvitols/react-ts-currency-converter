@@ -61,7 +61,7 @@ function CurrencySelector({
           />
         }
       />
-      <button onClick={handleCurrencySwap}>
+      <button type="button" onClick={handleCurrencySwap}>
         <SwitchIcon className="switch-icon" />
       </button>
       <FormGroup
