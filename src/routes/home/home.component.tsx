@@ -54,6 +54,10 @@ function Home() {
     return parseFloat(amount) * exchangeRate;
   }, [amount, exchangeRate]);
 
+  const convertButtonDisabled = useMemo((): boolean => {
+    return !selectedCurrencies.from || !selectedCurrencies.to || !amount;
+  }, [amount, selectedCurrencies]);
+
   return (
     <div>
       <h1 className="section-heading ta-center">Simple Currency Converter</h1>
@@ -77,7 +81,15 @@ function Home() {
             handleCurrencySelectorChanges={handleCurrencySelectorChanges}
           />
 
-          <FormGroup formElement={<Button type="submit" text="Convert" />} />
+          <FormGroup
+            formElement={
+              <Button
+                type="submit"
+                text="Convert"
+                disabled={convertButtonDisabled}
+              />
+            }
+          />
         </form>
 
         <div>{exchangeResult}</div>
