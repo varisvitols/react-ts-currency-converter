@@ -8,7 +8,7 @@ import {
 
 import { exchangeRatesURL } from "../config/ecb";
 
-type ExchangeRate = {
+export type ExchangeRate = {
   currency: string;
   rate: number;
 };
@@ -57,6 +57,12 @@ function ExchangeRatesProvider({ children }: ProviderProps) {
         const data = await response.text();
         const xml = parser.parseFromString(data, "application/xml");
         const elements = xml.getElementsByTagName("Cube");
+
+        // Add EUR as the first element
+        newExchangeRates.push({
+          currency: "EUR",
+          rate: 1,
+        });
 
         for (let i = 0; i < elements.length; i++) {
           const currency = elements[i].getAttribute("currency");

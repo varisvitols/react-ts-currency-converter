@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import InputText from "../../components/form/input-text/input-text.component";
 
 import Button from "../../components/button/button.component";
@@ -34,12 +34,32 @@ function Home() {
     console.log("selectedCurrencies changed", selectedCurrencies);
   }, [selectedCurrencies]);
 
+  const exchangeRate = useMemo((): number => {
+    const selectedFrom = exchangeRates.find(
+      (item) => item.currency === selectedCurrencies.from
+    );
+    const selectedTo = exchangeRates.find(
+      (item) => item.currency === selectedCurrencies.to
+    );
+
+    if (!selectedTo || !selectedFrom) return 0;
+
+    const baseRate = selectedTo.rate / selectedFrom.rate;
+
+    return baseRate;
+  }, [selectedCurrencies, exchangeRates]);
+
+  const exchangeResult = useMemo(() => {
+    if (!amount || !exchangeRate) return 0;
+    return parseFloat(amount) * exchangeRate;
+  }, [amount, exchangeRate]);
+
   return (
     <div>
       <h1 className="section-heading ta-center">Simple Currency Converter</h1>
       <div className="section-content">
         <div className="sub-heading ta-center">Exchange Rate</div>
-        <div className="rate ta-center">$34.43</div>
+        <div className="rate ta-center">{exchangeRate}</div>
 
         <form onSubmit={formSubmitHandler}>
           <FormGroup
@@ -59,6 +79,8 @@ function Home() {
 
           <FormGroup formElement={<Button type="submit" text="Convert" />} />
         </form>
+
+        <div>{exchangeResult}</div>
       </div>
     </div>
   );
