@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import InputText from "../../components/form/input-text/input-text.component";
+import TextInput from "../../components/form/input-text/input-text.component";
 
 import Button from "../../components/button/button.component";
 import FormGroup from "../../components/form/form-group/form-group.component";
@@ -69,7 +69,7 @@ function Home() {
           <FormGroup
             label="Amount"
             formElement={
-              <InputText
+              <TextInput
                 type="number"
                 value={amount}
                 onChange={inputChangeHandler}

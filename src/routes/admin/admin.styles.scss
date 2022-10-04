@@ -1,0 +1,18 @@
+.exchange-fees {
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  margin-top: 20px;
+}
+
+.exchange-fee-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fee-editor {
+  display: flex;
+  justify-content: space-between;
+}
