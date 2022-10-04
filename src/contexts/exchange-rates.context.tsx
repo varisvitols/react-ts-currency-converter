@@ -13,8 +13,22 @@ type ExchangeRate = {
   rate: number;
 };
 
+type SelectedCurrenciesBlueprint = {
+  from: string;
+  to: string;
+};
+
+const defaultSelectedCurrencies = {
+  from: "",
+  to: "",
+};
+
 type ExchangeRatesContextBlueprint = {
   exchangeRates: ExchangeRate[];
+  selectedCurrencies: SelectedCurrenciesBlueprint;
+  setFromCurrency: (currencyCode: string) => void;
+  setToCurrency: (currencyCode: string) => void;
+  swapCurrencies: () => void;
 };
 
 type ProviderProps = {
@@ -29,6 +43,8 @@ function useExchangeRates() {
 
 function ExchangeRatesProvider({ children }: ProviderProps) {
   const [exchangeRates, setExchangeRates] = useState<ExchangeRate[]>([]);
+  const [selectedCurrencies, setSelectedCurrencies] =
+    useState<SelectedCurrenciesBlueprint>(defaultSelectedCurrencies);
 
   useEffect(() => {
     console.log("get exchange rates");
@@ -64,11 +80,42 @@ function ExchangeRatesProvider({ children }: ProviderProps) {
     getExchangeRates();
   }, []);
 
+  // TODO: merge these 2 into one
+  const setFromCurrency = (currency: string) => {
+    const newSelectedCurrencies = (
+      oldCurrencies: SelectedCurrenciesBlueprint
+    ) => {
+      return { from: currency, to: oldCurrencies.to };
+    };
+    setSelectedCurrencies(newSelectedCurrencies);
+  };
+
+  const setToCurrency = (currency: string) => {
+    const newSelectedCurrencies = (
+      oldCurrencies: SelectedCurrenciesBlueprint
+    ) => {
+      return { from: oldCurrencies.from, to: currency };
+    };
+    setSelectedCurrencies(newSelectedCurrencies);
+  };
+
+  const swapCurrencies = () => {
+    //
+  };
+
   return (
-    <ExchangeRatesContext.Provider value={{ exchangeRates }}>
+    <ExchangeRatesContext.Provider
+      value={{
+        exchangeRates,
+        setFromCurrency,
+        setToCurrency,
+        swapCurrencies,
+        selectedCurrencies,
+      }}
+    >
       {children}
     </ExchangeRatesContext.Provider>
   );
 }
 
-export { useExchangeRates, ExchangeRatesProvider };
+export { useExchangeRates, ExchangeRatesProvider, defaultSelectedCurrencies };
