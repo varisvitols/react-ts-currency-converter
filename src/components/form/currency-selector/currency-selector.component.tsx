@@ -3,7 +3,7 @@ import CurrencyInput from "../currency-input/currency-input.component";
 
 import { ReactComponent as SwitchIcon } from "../../../assets/ico-switch.svg";
 import "./currency-selector.styles.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { defaultSelectedCurrencies } from "../../../contexts/exchange-rates.context";
 
 type CurrencySelectorProps = {
@@ -16,6 +16,10 @@ function CurrencySelector({
   const [locallySelectedCurrencies, setLocallySelectedCurrencies] = useState(
     defaultSelectedCurrencies
   );
+
+  // const selectRef = createRef<HTMLSelectElement>();
+  const selectFromRef = useRef<any>();
+  const selectToRef = useRef<any>();
 
   const handleChange = (changedCurrency: {
     direction: string;
@@ -34,6 +38,17 @@ function CurrencySelector({
     handleCurrencySelectorChanges(newLocallySelectedCurrencies);
   };
 
+  const handleCurrencySwap = () => {
+    selectFromRef.current.changeInputValue(locallySelectedCurrencies.to);
+    selectToRef.current.changeInputValue(locallySelectedCurrencies.from);
+    const newLocallySelectedCurrencies = {
+      from: locallySelectedCurrencies.to,
+      to: locallySelectedCurrencies.from,
+    };
+    setLocallySelectedCurrencies(newLocallySelectedCurrencies);
+    handleCurrencySelectorChanges(newLocallySelectedCurrencies);
+  };
+
   return (
     <div className="currency-selector">
       <FormGroup
@@ -42,10 +57,11 @@ function CurrencySelector({
           <CurrencyInput
             inputDirection="from"
             handleCurrencyInputChange={handleChange}
+            ref={selectFromRef}
           />
         }
       />
-      <button>
+      <button onClick={handleCurrencySwap}>
         <SwitchIcon className="switch-icon" />
       </button>
       <FormGroup
@@ -54,6 +70,7 @@ function CurrencySelector({
           <CurrencyInput
             inputDirection="to"
             handleCurrencyInputChange={handleChange}
+            ref={selectToRef}
           />
         }
       />
