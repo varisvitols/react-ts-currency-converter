@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  LegacyRef,
-} from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { useExchangeRates } from "../../../contexts/exchange-rates.context";
 import "./currency-input.styles.scss";
 
@@ -37,7 +32,6 @@ function CurrencyInput(
 
   useImperativeHandle(ref, () => ({
     changeInputValue(value: string) {
-      console.log(`input value changed: ${value}`);
       setSelectedValue(value);
     },
   }));

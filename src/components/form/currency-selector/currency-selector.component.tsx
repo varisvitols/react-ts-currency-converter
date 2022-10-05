@@ -24,9 +24,8 @@ function CurrencySelector({
   const selectToRef = useRef<any>();
 
   useEffect(() => {
-    // console.log("preselectedValues on mount", preselectedValues);
     setLocallySelectedCurrencies(preselectedValues);
-  }, []);
+  }, [preselectedValues]);
 
   useEffect(() => {
     selectFromRef.current.changeInputValue(locallySelectedCurrencies.from);
@@ -37,8 +36,6 @@ function CurrencySelector({
     direction: string;
     value: string;
   }) => {
-    // console.log("handle change in parent", changedCurrency);
-
     const newLocallySelectedCurrencies = { ...locallySelectedCurrencies };
     if (changedCurrency.direction === "from") {
       newLocallySelectedCurrencies.from = changedCurrency.value;

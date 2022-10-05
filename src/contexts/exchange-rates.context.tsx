@@ -18,7 +18,7 @@ type SelectedCurrenciesBlueprint = {
   to: string;
 };
 
-const defaultSelectedCurrencies: SelectedCurrenciesBlueprint = {
+export const defaultSelectedCurrencies: SelectedCurrenciesBlueprint = {
   from: "",
   to: "",
 };
@@ -28,7 +28,6 @@ type ExchangeRatesContextBlueprint = {
   selectedCurrencies: SelectedCurrenciesBlueprint;
   setFromCurrency: (currencyCode: string) => void;
   setToCurrency: (currencyCode: string) => void;
-  swapCurrencies: () => void;
 };
 
 type ProviderProps = {
@@ -37,17 +36,16 @@ type ProviderProps = {
 
 const ExchangeRatesContext = createContext({} as ExchangeRatesContextBlueprint);
 
-function useExchangeRates() {
+export function useExchangeRates() {
   return useContext(ExchangeRatesContext);
 }
 
-function ExchangeRatesProvider({ children }: ProviderProps) {
+export function ExchangeRatesProvider({ children }: ProviderProps) {
   const [exchangeRates, setExchangeRates] = useState<ExchangeRate[]>([]);
   const [selectedCurrencies, setSelectedCurrencies] =
     useState<SelectedCurrenciesBlueprint>(defaultSelectedCurrencies);
 
   useEffect(() => {
-    console.log("get exchange rates");
     const getExchangeRates = async () => {
       const parser = new DOMParser();
       const newExchangeRates = [] as ExchangeRate[];
@@ -58,7 +56,7 @@ function ExchangeRatesProvider({ children }: ProviderProps) {
         const xml = parser.parseFromString(data, "application/xml");
         const elements = xml.getElementsByTagName("Cube");
 
-        // Add EUR as the first element
+        // Add EUR as the first element, as it's missing in the XML data from API
         newExchangeRates.push({
           currency: "EUR",
           rate: 1,
@@ -105,17 +103,12 @@ function ExchangeRatesProvider({ children }: ProviderProps) {
     setSelectedCurrencies(newSelectedCurrencies);
   };
 
-  const swapCurrencies = () => {
-    //
-  };
-
   return (
     <ExchangeRatesContext.Provider
       value={{
         exchangeRates,
         setFromCurrency,
         setToCurrency,
-        swapCurrencies,
         selectedCurrencies,
       }}
     >
@@ -123,5 +116,3 @@ function ExchangeRatesProvider({ children }: ProviderProps) {
     </ExchangeRatesContext.Provider>
   );
 }
-
-export { useExchangeRates, ExchangeRatesProvider, defaultSelectedCurrencies };

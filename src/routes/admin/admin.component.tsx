@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../components/button/button.component";
 import CurrencySelector from "../../components/form/currency-selector/currency-selector.component";
 import { defaultExchangeFee } from "../../config/exchange-fee";
@@ -32,7 +32,6 @@ function Admin() {
   ) => {
     setIsEditing(true);
     setIsNewRecord(false);
-    // console.log("handleEditFeeClick", feeRecord);
     setFormValues(feeRecord);
     setFee(feeRecord.fee.toString());
   };
@@ -43,7 +42,6 @@ function Admin() {
   ) => {
     const deletionConfirmed = window.confirm("Really delete?");
     if (deletionConfirmed) deleteFeeRecord(feeRecord);
-    // console.log("handleDeleteFeeClick", feeRecord);
   };
 
   const handleSaveFeeClick = () => {
@@ -82,10 +80,6 @@ function Admin() {
   const handleCancelClick = () => {
     setIsEditing(false);
   };
-
-  // useEffect(() => {
-  //   console.log("currentformValues", formValues);
-  // }, [formValues]);
 
   return (
     <div>

@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import TextInput from "../../components/form/input-text/input-text.component";
-// import Button from "../../components/button/button.component";
 import FormGroup from "../../components/form/form-group/form-group.component";
 import CurrencySelector from "../../components/form/currency-selector/currency-selector.component";
 import { useExchangeRates } from "../../contexts/exchange-rates.context";
@@ -16,27 +15,20 @@ function Home() {
   const { fees } = useFees();
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
     setAmount(e.target.value);
   };
 
   const formSubmitHandler = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    console.log("form submit");
   };
 
   const handleCurrencySelectorChanges = (value: {
     from: string;
     to: string;
   }) => {
-    console.log("handle changes in home component: ", value);
     setFromCurrency(value.from);
     setToCurrency(value.to);
   };
-
-  useEffect(() => {
-    console.log("selectedCurrencies changed", selectedCurrencies);
-  }, [selectedCurrencies]);
 
   const exchangeRate = useMemo((): number => {
     const selectedFrom = exchangeRates.find(
@@ -96,16 +88,6 @@ function Home() {
             handleCurrencySelectorChanges={handleCurrencySelectorChanges}
             preselectedValues={{ ...selectedCurrencies }}
           />
-
-          {/* <FormGroup
-            formElement={
-              <Button
-                type="submit"
-                text="Convert"
-                disabled={!conversionResultsAvailable}
-              />
-            }
-          /> */}
         </form>
         {conversionResultsAvailable && (
           <div className="exchange-result">
