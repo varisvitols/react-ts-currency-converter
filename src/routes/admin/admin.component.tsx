@@ -44,7 +44,8 @@ function Admin() {
     if (deletionConfirmed) deleteFeeRecord(feeRecord);
   };
 
-  const handleSaveFeeClick = () => {
+  const handleSaveFeeClick = (event: React.SyntheticEvent) => {
+    event.preventDefault();
     const valuesToSave = { ...formValues, fee: parseFloat(fee) };
 
     if (!valuesToSave.id || valuesToSave.id.length < 7 || !valuesToSave.fee) {
@@ -121,7 +122,7 @@ function Admin() {
         </div>
 
         {isEditing && (
-          <>
+          <form onSubmit={handleSaveFeeClick}>
             <div className="fee-editor">
               <CurrencySelector
                 handleCurrencySelectorChanges={handleCurrencySelectorChanges}
@@ -148,13 +149,9 @@ function Admin() {
                 onClick={handleCancelClick}
                 style={{ width: "37%" }}
               />
-              <Button
-                text="Save"
-                onClick={handleSaveFeeClick}
-                style={{ width: "57%" }}
-              />
+              <Button text="Save" type="submit" style={{ width: "57%" }} />
             </div>
-          </>
+          </form>
         )}
       </div>
     </div>
