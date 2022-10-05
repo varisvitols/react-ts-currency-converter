@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "../../components/button/button.component";
 import CurrencySelector from "../../components/form/currency-selector/currency-selector.component";
 import { defaultExchangeFee } from "../../config/exchange-fee";
@@ -16,14 +16,18 @@ function Admin() {
   const [isNewRecord, setIsNewRecord] = useState(true);
   const [formValues, setFormValues] = useState(feeRecordDefaultValues);
   const [fee, setFee] = useState("");
+  const scrollToRef = useRef<any>();
 
   const { fees, addNewFeeRecord, updateFeeRecord, deleteFeeRecord } = useFees();
+
+  const scrollToForm = () => scrollToRef.current.scrollIntoView();
 
   const handleAddFeeClick = () => {
     setFormValues(feeRecordDefaultValues);
     setFee("");
     setIsEditing(true);
     setIsNewRecord(true);
+    scrollToForm();
   };
 
   const handleEditFeeClick = (
@@ -34,6 +38,7 @@ function Admin() {
     setIsNewRecord(false);
     setFormValues(feeRecord);
     setFee(feeRecord.fee.toString());
+    scrollToForm();
   };
 
   const handleDeleteFeeClick = (
@@ -154,6 +159,7 @@ function Admin() {
           </form>
         )}
       </div>
+      <div ref={scrollToRef}></div>
     </div>
   );
 }
