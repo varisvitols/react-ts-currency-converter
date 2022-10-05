@@ -5,11 +5,14 @@ import Button from "../../components/button/button.component";
 import FormGroup from "../../components/form/form-group/form-group.component";
 import CurrencySelector from "../../components/form/currency-selector/currency-selector.component";
 import { useExchangeRates } from "../../contexts/exchange-rates.context";
+import { FeeRecord, useFees } from "../../contexts/fees.context";
+import { defaultExchangeFee } from "../../config/exchange-fee";
 
 function Home() {
   const [amount, setAmount] = useState("");
   const { exchangeRates, selectedCurrencies, setFromCurrency, setToCurrency } =
     useExchangeRates();
+  const { fees } = useFees();
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     console.log(e.target.value);
@@ -49,10 +52,19 @@ function Home() {
     return baseRate;
   }, [selectedCurrencies, exchangeRates]);
 
+  const exchangeFee = useMemo(() => {
+    const { from, to } = selectedCurrencies;
+    const feeId = `${from}_${to}`;
+    const feeRecord = fees.find((item) => item.id === feeId);
+
+    return feeRecord ? feeRecord.fee : defaultExchangeFee;
+  }, [fees, selectedCurrencies]);
+
   const exchangeResult = useMemo(() => {
-    if (!amount || !exchangeRate) return 0;
-    return parseFloat(amount) * exchangeRate;
-  }, [amount, exchangeRate]);
+    const amountNumber = parseFloat(amount);
+    if (!amountNumber || !exchangeRate) return 0;
+    return (amountNumber - amountNumber * exchangeFee) * exchangeRate;
+  }, [amount, exchangeRate, exchangeFee]);
 
   const convertButtonDisabled = useMemo((): boolean => {
     return !selectedCurrencies.from || !selectedCurrencies.to || !amount;
@@ -64,6 +76,8 @@ function Home() {
       <div className="section-content">
         <div className="sub-heading ta-center">Exchange Rate</div>
         <div className="rate ta-center">{exchangeRate}</div>
+        <div className="sub-heading ta-center">Conversion Fee</div>
+        <div className="rate ta-center">{exchangeFee * 100}%</div>
 
         <form onSubmit={formSubmitHandler}>
           <FormGroup
@@ -79,7 +93,7 @@ function Home() {
 
           <CurrencySelector
             handleCurrencySelectorChanges={handleCurrencySelectorChanges}
-            preselectedValues={{ from: "", to: "" }}
+            preselectedValues={{ ...selectedCurrencies }}
           />
 
           <FormGroup
@@ -93,7 +107,7 @@ function Home() {
           />
         </form>
 
-        <div>{exchangeResult}</div>
+        <div className="exchange-result">{exchangeResult}</div>
       </div>
     </div>
   );
