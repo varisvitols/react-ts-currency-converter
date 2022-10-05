@@ -89,8 +89,8 @@ function Admin() {
 
   return (
     <div>
-      <h1 className="section-heading ta-center">Configure Conversion Fees</h1>
-      <div className="section-content">
+      <h1 className="page-heading ta-center">Configure Conversion Fees</h1>
+      <div className="page-content">
         <div className="sub-heading ta-center">
           Default Exchange Fee: {defaultExchangeFee * 100}%
         </div>
@@ -124,45 +124,44 @@ function Admin() {
           {!isEditing && (
             <Button text="+ Add Fee" onClick={handleAddFeeClick} />
           )}
-
-          {isEditing && (
-            <>
-              <div className="fee-editor">
-                <CurrencySelector
-                  handleCurrencySelectorChanges={handleCurrencySelectorChanges}
-                  preselectedValues={{
-                    from: formValues.from,
-                    to: formValues.to,
-                  }}
-                  currencyEditDisabled={!isNewRecord}
-                />
-                <FormGroup
-                  label="Fee"
-                  formElement={
-                    <TextInput
-                      type="text"
-                      onChange={handleFeeChange}
-                      value={fee}
-                      style={{ maxWidth: "96px" }}
-                    />
-                  }
-                />
-              </div>
-              <div className="fee-editor-buttons">
-                <Button
-                  text="Cancel"
-                  onClick={handleCancelClick}
-                  style={{ width: "37%" }}
-                />
-                <Button
-                  text="Save"
-                  onClick={handleSaveFeeClick}
-                  style={{ width: "57%" }}
-                />
-              </div>
-            </>
-          )}
         </div>
+
+        {isEditing && (
+          <>
+            <div className="fee-editor">
+              <CurrencySelector
+                handleCurrencySelectorChanges={handleCurrencySelectorChanges}
+                preselectedValues={{
+                  from: formValues.from,
+                  to: formValues.to,
+                }}
+                currencyEditDisabled={!isNewRecord}
+              />
+              <FormGroup
+                label="Fee"
+                formElement={
+                  <TextInput
+                    type="text"
+                    onChange={handleFeeChange}
+                    value={fee}
+                  />
+                }
+              />
+            </div>
+            <div className="fee-editor-buttons">
+              <Button
+                text="Cancel"
+                onClick={handleCancelClick}
+                style={{ width: "37%" }}
+              />
+              <Button
+                text="Save"
+                onClick={handleSaveFeeClick}
+                style={{ width: "57%" }}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

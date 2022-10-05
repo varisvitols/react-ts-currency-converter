@@ -9,15 +9,13 @@ function Navigation() {
   return (
     <>
       <div className="navigation">
-        <div className="container">
-          <div className="navigation-inner">
-            <Link className="nav-link" to="/">
-              <HomeIcon className="nav-icon icon-house" />
-            </Link>
-            <Link className="nav-link" to="/admin">
-              <SettingsIcon className="nav-icon icon-gear" />
-            </Link>
-          </div>
+        <div className="navigation-inner">
+          <Link className="nav-link" to="/">
+            <HomeIcon className="nav-icon icon-house" />
+          </Link>
+          <Link className="nav-link" to="/admin">
+            <SettingsIcon className="nav-icon icon-gear" />
+          </Link>
         </div>
       </div>
       <Outlet />

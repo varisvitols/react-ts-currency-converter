@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import TextInput from "../../components/form/input-text/input-text.component";
-
-import Button from "../../components/button/button.component";
+// import Button from "../../components/button/button.component";
 import FormGroup from "../../components/form/form-group/form-group.component";
 import CurrencySelector from "../../components/form/currency-selector/currency-selector.component";
 import { useExchangeRates } from "../../contexts/exchange-rates.context";
-import { FeeRecord, useFees } from "../../contexts/fees.context";
+import { useFees } from "../../contexts/fees.context";
 import { defaultExchangeFee } from "../../config/exchange-fee";
+
+import "./home.styles.scss";
 
 function Home() {
   const [amount, setAmount] = useState("");
@@ -66,16 +67,16 @@ function Home() {
     return (amountNumber - amountNumber * exchangeFee) * exchangeRate;
   }, [amount, exchangeRate, exchangeFee]);
 
-  const convertButtonDisabled = useMemo((): boolean => {
-    return !selectedCurrencies.from || !selectedCurrencies.to || !amount;
+  const conversionResultsAvailable = useMemo((): boolean => {
+    return !!selectedCurrencies.from && !!selectedCurrencies.to && !!amount;
   }, [amount, selectedCurrencies]);
 
   return (
     <div>
-      <h1 className="section-heading ta-center">Simple Currency Converter</h1>
-      <div className="section-content">
+      <h1 className="page-heading ta-center">Simple Currency Converter</h1>
+      <div className="page-content">
         <div className="sub-heading ta-center">Exchange Rate</div>
-        <div className="rate ta-center">{exchangeRate}</div>
+        <div className="rate ta-center">{exchangeRate.toFixed(4)}</div>
         <div className="sub-heading ta-center">Conversion Fee</div>
         <div className="rate ta-center">{exchangeFee * 100}%</div>
 
@@ -96,18 +97,22 @@ function Home() {
             preselectedValues={{ ...selectedCurrencies }}
           />
 
-          <FormGroup
+          {/* <FormGroup
             formElement={
               <Button
                 type="submit"
                 text="Convert"
-                disabled={convertButtonDisabled}
+                disabled={!conversionResultsAvailable}
               />
             }
-          />
+          /> */}
         </form>
-
-        <div className="exchange-result">{exchangeResult}</div>
+        {conversionResultsAvailable && (
+          <div className="exchange-result">
+            <div className="sub-heading ta-center">Exchange Result</div>
+            <div className="rate ta-center">{exchangeResult.toFixed(2)}</div>
+          </div>
+        )}
       </div>
     </div>
   );

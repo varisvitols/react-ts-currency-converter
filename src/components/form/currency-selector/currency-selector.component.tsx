@@ -72,13 +72,19 @@ function CurrencySelector({
           />
         }
       />
-      <button
-        type="button"
-        onClick={handleCurrencySwap}
-        disabled={currencyEditDisabled}
-      >
-        <SwitchIcon className="switch-icon" />
-      </button>
+      <FormGroup
+        label="From"
+        formElement={
+          <button
+            type="button"
+            onClick={handleCurrencySwap}
+            disabled={currencyEditDisabled}
+          >
+            <SwitchIcon className="switch-icon" />
+          </button>
+        }
+      />
+
       <FormGroup
         label="To"
         formElement={

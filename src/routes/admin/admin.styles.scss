@@ -1,8 +1,9 @@
 .exchange-fees {
   display: flex;
   flex-direction: column;
-  font-size: x-large;
+  font-size: 1.5rem;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .exchange-fee-record {
@@ -12,18 +13,25 @@
   margin-bottom: 20px;
 
   .from-to {
-    width: 130px;
+    width: 28%;
   }
 
   .fee-amount {
-    width: 90px;
+    width: 19%;
   }
 }
 
 .fee-editor {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+
+  .input-text {
+    width: 96px;
+
+    @media (max-width: 540px) {
+      width: 80px;
+    }
+  }
 }
 
 .fee-editor-buttons {
