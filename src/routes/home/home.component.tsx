@@ -79,6 +79,7 @@ function Home() {
 
           <CurrencySelector
             handleCurrencySelectorChanges={handleCurrencySelectorChanges}
+            preselectedValues={{ from: "", to: "" }}
           />
 
           <FormGroup

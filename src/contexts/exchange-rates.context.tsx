@@ -18,7 +18,7 @@ type SelectedCurrenciesBlueprint = {
   to: string;
 };
 
-const defaultSelectedCurrencies = {
+const defaultSelectedCurrencies: SelectedCurrenciesBlueprint = {
   from: "",
   to: "",
 };
