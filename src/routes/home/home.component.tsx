@@ -92,7 +92,9 @@ function Home() {
         {conversionResultsAvailable && (
           <div className="exchange-result">
             <div className="sub-heading ta-center">Exchange Result</div>
-            <div className="rate ta-center">{exchangeResult.toFixed(2)}</div>
+            <div className="rate ta-center">
+              {`${exchangeResult.toFixed(2)} ${selectedCurrencies.to}`}
+            </div>
           </div>
         )}
       </div>
