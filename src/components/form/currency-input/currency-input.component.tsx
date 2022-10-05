@@ -13,13 +13,14 @@ type CurrencyInputProps = {
     direction: string;
     value: string;
   }) => void;
+  disabled?: boolean;
 };
 
 // This didn't work, using Any instead
 // export type SelectRef = LegacyRef<HTMLSelectElement>;
 
 function CurrencyInput(
-  { inputDirection, handleCurrencyInputChange }: CurrencyInputProps,
+  { inputDirection, handleCurrencyInputChange, disabled }: CurrencyInputProps,
   ref: any
 ) {
   const [selectedValue, setSelectedValue] = useState("");
@@ -47,6 +48,7 @@ function CurrencyInput(
       className="currency-input"
       onChange={currencyChangeHandler}
       value={selectedValue}
+      disabled={disabled}
     >
       <option></option>
       {exchangeRates.map(({ currency, rate }) => {

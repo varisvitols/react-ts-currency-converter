@@ -4,8 +4,12 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset" | undefined;
   text: string;
   disabled?: boolean;
+  className?: string;
   style?: React.CSSProperties;
-  onClick?: () => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    value?: any
+  ) => void;
 };
 
 function Button({
@@ -13,11 +17,12 @@ function Button({
   text,
   disabled = false,
   style,
+  className = "",
   onClick,
 }: ButtonProps) {
   return (
     <button
-      className="button"
+      className={`button ${className}`}
       disabled={disabled}
       type={type}
       style={style}

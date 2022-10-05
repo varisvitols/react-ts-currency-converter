@@ -3,6 +3,7 @@
   --gray-color: #d3d3d3;
   --dark-text-color: #1a1a1a;
   --gray-text-color: #424242;
+  --red-color: red;
 }
 
 html *,
@@ -31,6 +32,15 @@ input,
 select,
 button {
   outline-color: var(--blue-color);
+}
+
+select,
+button {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .ta-center {

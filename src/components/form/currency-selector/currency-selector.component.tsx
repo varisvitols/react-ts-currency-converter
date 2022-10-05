@@ -3,29 +3,41 @@ import CurrencyInput from "../currency-input/currency-input.component";
 
 import { ReactComponent as SwitchIcon } from "../../../assets/ico-switch.svg";
 import "./currency-selector.styles.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { defaultSelectedCurrencies } from "../../../contexts/exchange-rates.context";
 
 type CurrencySelectorProps = {
+  preselectedValues: { from: string; to: string };
   handleCurrencySelectorChanges: (value: { from: string; to: string }) => void;
+  currencyEditDisabled?: boolean;
 };
 
 function CurrencySelector({
+  preselectedValues,
   handleCurrencySelectorChanges,
+  currencyEditDisabled,
 }: CurrencySelectorProps) {
   const [locallySelectedCurrencies, setLocallySelectedCurrencies] = useState(
     defaultSelectedCurrencies
   );
-
-  // const selectRef = createRef<HTMLSelectElement>();
   const selectFromRef = useRef<any>();
   const selectToRef = useRef<any>();
+
+  useEffect(() => {
+    // console.log("preselectedValues on mount", preselectedValues);
+    setLocallySelectedCurrencies(preselectedValues);
+  }, []);
+
+  useEffect(() => {
+    selectFromRef.current.changeInputValue(locallySelectedCurrencies.from);
+    selectToRef.current.changeInputValue(locallySelectedCurrencies.to);
+  }, [locallySelectedCurrencies]);
 
   const handleChange = (changedCurrency: {
     direction: string;
     value: string;
   }) => {
-    console.log("handle change in parent", changedCurrency);
+    // console.log("handle change in parent", changedCurrency);
 
     const newLocallySelectedCurrencies = { ...locallySelectedCurrencies };
     if (changedCurrency.direction === "from") {
@@ -39,8 +51,6 @@ function CurrencySelector({
   };
 
   const handleCurrencySwap = () => {
-    selectFromRef.current.changeInputValue(locallySelectedCurrencies.to);
-    selectToRef.current.changeInputValue(locallySelectedCurrencies.from);
     const newLocallySelectedCurrencies = {
       from: locallySelectedCurrencies.to,
       to: locallySelectedCurrencies.from,
@@ -57,11 +67,16 @@ function CurrencySelector({
           <CurrencyInput
             inputDirection="from"
             handleCurrencyInputChange={handleChange}
+            disabled={currencyEditDisabled}
             ref={selectFromRef}
           />
         }
       />
-      <button type="button" onClick={handleCurrencySwap}>
+      <button
+        type="button"
+        onClick={handleCurrencySwap}
+        disabled={currencyEditDisabled}
+      >
         <SwitchIcon className="switch-icon" />
       </button>
       <FormGroup
@@ -70,6 +85,7 @@ function CurrencySelector({
           <CurrencyInput
             inputDirection="to"
             handleCurrencyInputChange={handleChange}
+            disabled={currencyEditDisabled}
             ref={selectToRef}
           />
         }
