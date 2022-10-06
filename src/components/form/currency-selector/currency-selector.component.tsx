@@ -70,12 +70,12 @@ function CurrencySelector({
         }
       />
       <FormGroup
-        label="From"
         formElement={
           <button
             type="button"
             onClick={handleCurrencySwap}
             disabled={currencyEditDisabled}
+            style={{ marginTop: "auto" }}
           >
             <SwitchIcon className="switch-icon" />
           </button>
