@@ -6,7 +6,9 @@ import {
   useEffect,
 } from "react";
 
-import { exchangeRatesURL } from "../config/ecb";
+// import { exchangeRatesURL } from "../config/ecb";
+
+import ExchangRates from "../data/exchangeRates.json";
 
 export type ExchangeRate = {
   currency: string;
@@ -67,38 +69,40 @@ export function ExchangeRatesProvider({ children }: ProviderProps) {
 
   useEffect(() => {
     const getExchangeRates = async () => {
-      const parser = new DOMParser();
-      const newExchangeRates = [] as ExchangeRate[];
+      // const parser = new DOMParser();
+      // const newExchangeRates = [] as ExchangeRate[];
 
-      try {
-        const response = await fetch(exchangeRatesURL);
-        const data = await response.text();
-        const xml = parser.parseFromString(data, "application/xml");
-        const elements = xml.getElementsByTagName("Cube");
+      // try {
+      //   const response = await fetch(exchangeRatesURL);
+      //   const data = await response.text();
+      //   const xml = parser.parseFromString(data, "application/xml");
+      //   const elements = xml.getElementsByTagName("Cube");
 
-        // Add EUR as the first element, as it's missing in the XML data from API
-        newExchangeRates.push({
-          currency: "EUR",
-          rate: 1,
-        });
+      //   // Add EUR as the first element, as it's missing in the XML data from API
+      //   newExchangeRates.push({
+      //     currency: "EUR",
+      //     rate: 1,
+      //   });
 
-        for (let i = 0; i < elements.length; i++) {
-          const currency = elements[i].getAttribute("currency");
-          const rate = elements[i].getAttribute("rate");
+      //   for (let i = 0; i < elements.length; i++) {
+      //     const currency = elements[i].getAttribute("currency");
+      //     const rate = elements[i].getAttribute("rate");
 
-          if (!currency || !rate) continue;
+      //     if (!currency || !rate) continue;
 
-          newExchangeRates.push({
-            currency,
-            rate: parseFloat(rate),
-          });
-        }
-      } catch (e) {
-        alert(`Couldn't fetch exchange rates from server`);
-        console.log(`Error fetching exchange rates from the server: ${e}`);
-      }
+      //     newExchangeRates.push({
+      //       currency,
+      //       rate: parseFloat(rate),
+      //     });
+      //   }
 
-      setExchangeRates(newExchangeRates);
+      //   console.log(newExchangeRates);
+      // } catch (e) {
+      //   alert(`Couldn't fetch exchange rates from server`);
+      //   console.log(`Error fetching exchange rates from the server: ${e}`);
+      // }
+
+      setExchangeRates(ExchangRates);
     };
 
     getExchangeRates();
