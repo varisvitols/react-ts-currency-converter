@@ -1,4 +1,1 @@
-[[redirects]]
-  from = "/stats/eurofxref/eurofxref-daily.xml"
-  to = "https://www.ecb.europa.eu/:splat"
-  status = 200
+/stats/eurofxref/eurofxref-daily.xml https://www.ecb.europa.eu/:splat 200
