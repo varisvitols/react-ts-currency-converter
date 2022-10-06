@@ -34,6 +34,26 @@ type ProviderProps = {
   children: ReactNode;
 };
 
+const _setFromCurrency = (currency: string) => {
+  const newSelectedCurrencies = (
+    oldCurrencies: SelectedCurrenciesBlueprint
+  ) => {
+    return { from: currency, to: oldCurrencies.to };
+  };
+
+  return newSelectedCurrencies;
+};
+
+const _setToCurrency = (currency: string) => {
+  const newSelectedCurrencies = (
+    oldCurrencies: SelectedCurrenciesBlueprint
+  ) => {
+    return { from: oldCurrencies.from, to: currency };
+  };
+
+  return newSelectedCurrencies;
+};
+
 const ExchangeRatesContext = createContext({} as ExchangeRatesContextBlueprint);
 
 export function useExchangeRates() {
@@ -84,34 +104,22 @@ export function ExchangeRatesProvider({ children }: ProviderProps) {
     getExchangeRates();
   }, []);
 
-  // TODO: merge these 2 into one
   const setFromCurrency = (currency: string) => {
-    const newSelectedCurrencies = (
-      oldCurrencies: SelectedCurrenciesBlueprint
-    ) => {
-      return { from: currency, to: oldCurrencies.to };
-    };
-    setSelectedCurrencies(newSelectedCurrencies);
+    setSelectedCurrencies(_setFromCurrency(currency));
   };
 
   const setToCurrency = (currency: string) => {
-    const newSelectedCurrencies = (
-      oldCurrencies: SelectedCurrenciesBlueprint
-    ) => {
-      return { from: oldCurrencies.from, to: currency };
-    };
-    setSelectedCurrencies(newSelectedCurrencies);
+    setSelectedCurrencies(_setToCurrency(currency));
   };
 
+  const value = {
+    exchangeRates,
+    setFromCurrency,
+    setToCurrency,
+    selectedCurrencies,
+  };
   return (
-    <ExchangeRatesContext.Provider
-      value={{
-        exchangeRates,
-        setFromCurrency,
-        setToCurrency,
-        selectedCurrencies,
-      }}
-    >
+    <ExchangeRatesContext.Provider value={value}>
       {children}
     </ExchangeRatesContext.Provider>
   );
