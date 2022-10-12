@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import "./form-group.styles.scss";
+import { FormGroupSC } from "./form-group.styles";
 
 type FormGroupProps = {
   label?: string;
@@ -9,10 +9,10 @@ type FormGroupProps = {
 
 function FormGroup({ label, formElement }: FormGroupProps) {
   return (
-    <div className="form-group">
+    <FormGroupSC>
       {label && <label>{label}</label>}
       {formElement}
-    </div>
+    </FormGroupSC>
   );
 }
 
