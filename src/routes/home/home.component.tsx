@@ -53,15 +53,14 @@ function Home() {
     return feeRecord ? feeRecord.fee : defaultExchangeFee;
   }, [fees, selectedCurrencies]);
 
-  const exchangeResult = useMemo(() => {
+  const exchangeResult = (() => {
     const amountNumber = parseFloat(amount);
     if (!amountNumber || !exchangeRate) return 0;
     return (amountNumber - amountNumber * exchangeFee) * exchangeRate;
-  }, [amount, exchangeRate, exchangeFee]);
+  })();
 
-  const conversionResultsAvailable = useMemo((): boolean => {
-    return !!selectedCurrencies.from && !!selectedCurrencies.to && !!amount;
-  }, [amount, selectedCurrencies]);
+  const conversionResultsAvailable =
+    !!selectedCurrencies.from && !!selectedCurrencies.to && !!amount;
 
   return (
     <div>
